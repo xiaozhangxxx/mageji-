@@ -1,0 +1,42 @@
+public class Solution {
+    private Stack<string> pVal = new Stack<string>();
+    private Stack<string> qVal =  new Stack<string>();
+
+    public bool IsSameTree(TreeNode p, TreeNode q) {
+        if(p == null && q == null) return true;
+        if(p == null && q != null) return false;
+        if(p != null && q == null) return false;
+
+        Traverse(p, pVal, "");
+        Traverse(q, qVal, "");
+
+        while (pVal.Count > 0 && qVal.Count > 0)
+        {
+            var pOut = pVal.Pop();
+            var qOut = qVal.Pop();
+            if(pOut != qOut)
+            {
+                return false;
+            }
+        }
+
+        if(pVal.Count > 0 || qVal.Count > 0) return false;
+
+        return true;
+    }
+
+    private void Traverse(TreeNode tr, Stack<string> stack, string part)
+    {
+        if(tr != null)
+        {
+            Traverse(tr.left, stack, "left");
+            stack.Push(tr.val.ToString());
+            Traverse(tr.right, stack, "right");
+        }
+        else
+        {
+            stack.Push(part + "null");
+        }
+    }
+
+        }
