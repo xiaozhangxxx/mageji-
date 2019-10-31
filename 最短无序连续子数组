@@ -1,0 +1,25 @@
+int n = nums.Length;
+        //赋初始开始和结束值
+        int start = -1;
+        int end = -2;
+        //结束值赋为-2是考虑在数组本身就是有序时
+        //最后一句的return也可以给出正确值
+        //因为 end = i 没有被执行
+        int min = nums[n - 1];
+        int max = nums[0];
+        //
+        for(int i = 0, pos = 0; i < n; i++) {
+            pos = n - 1 - i;
+            //找出局部最大、最小值
+            max = Math.Max(max, nums[i]);
+            min = Math.Min(min, nums[pos]);
+            //如果当前值小于局部最大值，重置end
+            if(nums[i] < max)
+                end = i;
+            //如果当前值大于局部最小值，重置start
+            if(nums[pos] > min)
+                start = pos;
+        }
+        //返回开始和结束的索引差
+        //假如是1、2，2 - 1 + 1 = 2，因为1，2是2个值
+        return end - start + 1;
